@@ -30,6 +30,23 @@ public class MemberLocalServiceWrapper
 		_memberLocalService = memberLocalService;
 	}
 
+	@Override
+	public com.liferay.training.amf.model.Member addMember(
+			long groupId, String firstName, String lastName,
+			String emailAddress, boolean male, java.util.Date birthday,
+			String password, String homePhone, String mobilePhone,
+			String address1, String address2, String city, String state,
+			String zipCode, String securityQuestion, String answer,
+			boolean termOfUse,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _memberLocalService.addMember(
+			groupId, firstName, lastName, emailAddress, male, birthday,
+			password, homePhone, mobilePhone, address1, address2, city, state,
+			zipCode, securityQuestion, answer, termOfUse, serviceContext);
+	}
+
 	/**
 	 * Adds the member to the database. Also notifies the appropriate model listeners.
 	 *

@@ -15,7 +15,13 @@
 package com.liferay.training.amf.service.impl;
 
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.training.amf.model.Member;
 import com.liferay.training.amf.service.base.MemberLocalServiceBaseImpl;
+
+import java.util.Date;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -43,4 +49,39 @@ public class MemberLocalServiceImpl extends MemberLocalServiceBaseImpl {
 	 *
 	 * Never reference this class directly. Use <code>com.liferay.training.amf.service.MemberLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.training.amf.service.MemberLocalServiceUtil</code>.
 	 */
+	
+	public Member addMember(long groupId, String firstName, String lastName, String emailAddress, boolean male, Date birthday, 
+			String password, String homePhone, String mobilePhone, String address1, String address2, String city, 
+			String state, String zipCode, String securityQuestion, String answer, boolean termOfUse, ServiceContext serviceContext) throws PortalException {
+		
+		// validator
+		
+		// Get group and user
+		Group group = groupLocalService.getGroup(groupId);
+//		long userId = serviceContext.getUserId();
+//		User user = userLocalService.getUser(userId);
+		// Generate primary key for Member
+		long amfId = counterLocalService.increment(Member.class.getName());
+		Member member = createMember(amfId);
+		member.setFirstName(firstName);
+		member.setLastName(lastName);
+		member.setEmailAddress(emailAddress);
+		member.setMale(male);
+		member.setBirthday(birthday);
+		member.setPassword(password);
+		member.setHomePhone(homePhone);
+		member.setMobilePhone(mobilePhone);
+		member.setAddress1(address1);
+		member.setAddress2(address2);
+		member.setCity(city);
+		member.setState(state);
+		member.setZipCode(zipCode);
+		member.setSecurityQuestion(securityQuestion);
+		member.setAnswer(answer);
+		member.setTermOfUse(termOfUse);
+		
+		// persit member to database
+		member = super.addMember(member);
+		return member;
+	}
 }

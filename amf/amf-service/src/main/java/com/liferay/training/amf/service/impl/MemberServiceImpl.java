@@ -15,7 +15,12 @@
 package com.liferay.training.amf.service.impl;
 
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.training.amf.model.Member;
 import com.liferay.training.amf.service.base.MemberServiceBaseImpl;
+
+import java.util.Date;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -46,4 +51,12 @@ public class MemberServiceImpl extends MemberServiceBaseImpl {
 	 *
 	 * Never reference this class directly. Always use <code>com.liferay.training.amf.service.MemberServiceUtil</code> to access the member remote service.
 	 */
+	public Member addMember(long groupId, String firstName, String lastName, String emailAddress, boolean male, Date birthday, 
+			String password, String homePhone, String mobilePhone, String address1, String address2, String city, 
+			String state, String zipCode, String securityQuestion, String answer, boolean termOfUse, ServiceContext serviceContext) throws PortalException {
+	
+		return memberLocalService.addMember(groupId, firstName, lastName, emailAddress, male, birthday, 
+				password, homePhone, mobilePhone, address1, address2, city, 
+				state, zipCode, securityQuestion, answer, termOfUse, serviceContext);
+	}
 }

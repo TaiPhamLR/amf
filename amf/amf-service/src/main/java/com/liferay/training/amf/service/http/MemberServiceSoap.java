@@ -14,9 +14,15 @@
 
 package com.liferay.training.amf.service.http;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.training.amf.service.MemberServiceUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.training.amf.service.MemberServiceUtil</code> service
+ * <code>MemberServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -56,4 +62,35 @@ package com.liferay.training.amf.service.http;
  */
 @Deprecated
 public class MemberServiceSoap {
+
+	public static com.liferay.training.amf.model.MemberSoap addMember(
+			long groupId, String firstName, String lastName,
+			String emailAddress, boolean male, java.util.Date birthday,
+			String password, String homePhone, String mobilePhone,
+			String address1, String address2, String city, String state,
+			String zipCode, String securityQuestion, String answer,
+			boolean termOfUse,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.training.amf.model.Member returnValue =
+				MemberServiceUtil.addMember(
+					groupId, firstName, lastName, emailAddress, male, birthday,
+					password, homePhone, mobilePhone, address1, address2, city,
+					state, zipCode, securityQuestion, answer, termOfUse,
+					serviceContext);
+
+			return com.liferay.training.amf.model.MemberSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(MemberServiceSoap.class);
+
 }

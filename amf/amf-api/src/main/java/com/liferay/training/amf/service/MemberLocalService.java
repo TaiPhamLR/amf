@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -33,6 +34,7 @@ import com.liferay.training.amf.model.Member;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -60,6 +62,14 @@ public interface MemberLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.training.amf.service.impl.MemberLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the member local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link MemberLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	public Member addMember(
+			long groupId, String firstName, String lastName,
+			String emailAddress, boolean male, Date birthday, String password,
+			String homePhone, String mobilePhone, String address1,
+			String address2, String city, String state, String zipCode,
+			String securityQuestion, String answer, boolean termOfUse,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * Adds the member to the database. Also notifies the appropriate model listeners.
