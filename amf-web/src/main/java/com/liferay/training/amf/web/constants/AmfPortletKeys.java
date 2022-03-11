@@ -7,5 +7,5 @@ public class AmfPortletKeys {
 
 	public static final String AMF =
 		"com_liferay_training_amf_web_portlet_AmfPortlet";
-	
+
 }

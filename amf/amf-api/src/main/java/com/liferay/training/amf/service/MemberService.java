@@ -21,10 +21,12 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.training.amf.model.Member;
 
-import java.util.Date;
+import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -53,12 +55,24 @@ public interface MemberService extends BaseService {
 	 */
 	public Member addMember(
 			long groupId, String firstName, String lastName,
-			String emailAddress, boolean male, Date birthday, String password,
-			String homePhone, String mobilePhone, String address1,
-			String address2, String city, String state, String zipCode,
-			String securityQuestion, String answer, boolean termOfUse,
-			ServiceContext serviceContext)
+			String emailAddress, String username, boolean male,
+			int monthOfBirth, int dayOfBirth, int yearOfBirth, String password,
+			String confirmPassword, String homePhone, String mobilePhone,
+			String address1, String address2, String city, String state,
+			String zipCode, String securityQuestion, String answer,
+			boolean termOfUse, ServiceContext serviceContext)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Member> getAllMembers();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Member> getMembersByKeywords(
+		long scopeGroupId, String keywords, int start, int end,
+		OrderByComparator<Member> comparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Object getmembersCountByKeywords(long scopeGroupId, String keywords);
 
 	/**
 	 * Returns the OSGi service identifier.

@@ -33,8 +33,9 @@ public class MemberServiceWrapper
 	@Override
 	public com.liferay.training.amf.model.Member addMember(
 			long groupId, String firstName, String lastName,
-			String emailAddress, boolean male, java.util.Date birthday,
-			String password, String homePhone, String mobilePhone,
+			String emailAddress, String username, boolean male,
+			int monthOfBirth, int dayOfBirth, int yearOfBirth, String password,
+			String confirmPassword, String homePhone, String mobilePhone,
 			String address1, String address2, String city, String state,
 			String zipCode, String securityQuestion, String answer,
 			boolean termOfUse,
@@ -42,9 +43,35 @@ public class MemberServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _memberService.addMember(
-			groupId, firstName, lastName, emailAddress, male, birthday,
-			password, homePhone, mobilePhone, address1, address2, city, state,
-			zipCode, securityQuestion, answer, termOfUse, serviceContext);
+			groupId, firstName, lastName, emailAddress, username, male,
+			monthOfBirth, dayOfBirth, yearOfBirth, password, confirmPassword,
+			homePhone, mobilePhone, address1, address2, city, state, zipCode,
+			securityQuestion, answer, termOfUse, serviceContext);
+	}
+
+	@Override
+	public java.util.List<com.liferay.training.amf.model.Member>
+		getAllMembers() {
+
+		return _memberService.getAllMembers();
+	}
+
+	@Override
+	public java.util.List<com.liferay.training.amf.model.Member>
+		getMembersByKeywords(
+			long scopeGroupId, String keywords, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.training.amf.model.Member> comparator) {
+
+		return _memberService.getMembersByKeywords(
+			scopeGroupId, keywords, start, end, comparator);
+	}
+
+	@Override
+	public Object getmembersCountByKeywords(
+		long scopeGroupId, String keywords) {
+
+		return _memberService.getmembersCountByKeywords(scopeGroupId, keywords);
 	}
 
 	/**

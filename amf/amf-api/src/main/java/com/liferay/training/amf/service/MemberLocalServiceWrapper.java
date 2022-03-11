@@ -33,18 +33,20 @@ public class MemberLocalServiceWrapper
 	@Override
 	public com.liferay.training.amf.model.Member addMember(
 			long groupId, String firstName, String lastName,
-			String emailAddress, boolean male, java.util.Date birthday,
-			String password, String homePhone, String mobilePhone,
+			String emailAddress, String username, boolean male,
+			int monthOfBirth, int dayOfBirth, int yearOfBirth, String password,
+			String confirmPassword, String homePhone, String mobilePhone,
 			String address1, String address2, String city, String state,
 			String zipCode, String securityQuestion, String answer,
-			boolean termOfUse,
+			boolean termsOfUse,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _memberLocalService.addMember(
-			groupId, firstName, lastName, emailAddress, male, birthday,
-			password, homePhone, mobilePhone, address1, address2, city, state,
-			zipCode, securityQuestion, answer, termOfUse, serviceContext);
+			groupId, firstName, lastName, emailAddress, username, male,
+			monthOfBirth, dayOfBirth, yearOfBirth, password, confirmPassword,
+			homePhone, mobilePhone, address1, address2, city, state, zipCode,
+			securityQuestion, answer, termsOfUse, serviceContext);
 	}
 
 	/**
@@ -234,6 +236,13 @@ public class MemberLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.training.amf.model.Member>
+		getAllMembers() {
+
+		return _memberLocalService.getAllMembers();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 
@@ -272,6 +281,17 @@ public class MemberLocalServiceWrapper
 		return _memberLocalService.getMembers(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.training.amf.model.Member>
+		getMembersByKeywords(
+			long scopeGroupId, String keywords, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.training.amf.model.Member> comparator) {
+
+		return _memberLocalService.getMembersByKeywords(
+			scopeGroupId, keywords, start, end, comparator);
+	}
+
 	/**
 	 * Returns the number of members.
 	 *
@@ -280,6 +300,14 @@ public class MemberLocalServiceWrapper
 	@Override
 	public int getMembersCount() {
 		return _memberLocalService.getMembersCount();
+	}
+
+	@Override
+	public Object getmembersCountByKeywords(
+		long scopeGroupId, String keywords) {
+
+		return _memberLocalService.getmembersCountByKeywords(
+			scopeGroupId, keywords);
 	}
 
 	/**

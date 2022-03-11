@@ -6,7 +6,7 @@ Export-Package:\
 	com.liferay.training.amf.model,\
 	com.liferay.training.amf.service,\
 	com.liferay.training.amf.service.persistence,\
-	com.liferay.training.amf.service.validator,\
-	com.liferay.training.amf.service.constants
+	com.liferay.training.amf.constants,\
+	com.liferay.training.amf.validator
 -check: EXPORTS
 -includeresource: META-INF/service.xml=../amf-service/service.xml

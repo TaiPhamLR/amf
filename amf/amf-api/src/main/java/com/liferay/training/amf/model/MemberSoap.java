@@ -44,7 +44,9 @@ public class MemberSoap implements Serializable {
 		soapModel.setLastName(model.getLastName());
 		soapModel.setEmailAddress(model.getEmailAddress());
 		soapModel.setMale(model.isMale());
-		soapModel.setBirthday(model.getBirthday());
+		soapModel.setMonthOfBirth(model.getMonthOfBirth());
+		soapModel.setDayOfBirth(model.getDayOfBirth());
+		soapModel.setYearOfBirth(model.getYearOfBirth());
 		soapModel.setPassword(model.getPassword());
 		soapModel.setHomePhone(model.getHomePhone());
 		soapModel.setMobilePhone(model.getMobilePhone());
@@ -200,12 +202,28 @@ public class MemberSoap implements Serializable {
 		_male = male;
 	}
 
-	public Date getBirthday() {
-		return _birthday;
+	public int getMonthOfBirth() {
+		return _monthOfBirth;
 	}
 
-	public void setBirthday(Date birthday) {
-		_birthday = birthday;
+	public void setMonthOfBirth(int monthOfBirth) {
+		_monthOfBirth = monthOfBirth;
+	}
+
+	public int getDayOfBirth() {
+		return _dayOfBirth;
+	}
+
+	public void setDayOfBirth(int dayOfBirth) {
+		_dayOfBirth = dayOfBirth;
+	}
+
+	public int getYearOfBirth() {
+		return _yearOfBirth;
+	}
+
+	public void setYearOfBirth(int yearOfBirth) {
+		_yearOfBirth = yearOfBirth;
 	}
 
 	public String getPassword() {
@@ -311,7 +329,9 @@ public class MemberSoap implements Serializable {
 	private String _lastName;
 	private String _emailAddress;
 	private boolean _male;
-	private Date _birthday;
+	private int _monthOfBirth;
+	private int _dayOfBirth;
+	private int _yearOfBirth;
 	private String _password;
 	private String _homePhone;
 	private String _mobilePhone;

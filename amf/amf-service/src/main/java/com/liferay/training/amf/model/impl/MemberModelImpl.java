@@ -77,7 +77,8 @@ public class MemberModelImpl
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"firstName", Types.VARCHAR},
 		{"lastName", Types.VARCHAR}, {"emailAddress", Types.VARCHAR},
-		{"male", Types.BOOLEAN}, {"birthday", Types.TIMESTAMP},
+		{"male", Types.BOOLEAN}, {"monthOfBirth", Types.INTEGER},
+		{"dayOfBirth", Types.INTEGER}, {"yearOfBirth", Types.INTEGER},
 		{"password_", Types.VARCHAR}, {"homePhone", Types.VARCHAR},
 		{"mobilePhone", Types.VARCHAR}, {"address1", Types.VARCHAR},
 		{"address2", Types.VARCHAR}, {"city", Types.VARCHAR},
@@ -101,7 +102,9 @@ public class MemberModelImpl
 		TABLE_COLUMNS_MAP.put("lastName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("emailAddress", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("male", Types.BOOLEAN);
-		TABLE_COLUMNS_MAP.put("birthday", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("monthOfBirth", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("dayOfBirth", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("yearOfBirth", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("password_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("homePhone", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("mobilePhone", Types.VARCHAR);
@@ -116,7 +119,7 @@ public class MemberModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Amf_Member (memberId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,firstName VARCHAR(75) null,lastName VARCHAR(75) null,emailAddress VARCHAR(75) null,male BOOLEAN,birthday DATE null,password_ VARCHAR(75) null,homePhone VARCHAR(75) null,mobilePhone VARCHAR(75) null,address1 VARCHAR(75) null,address2 VARCHAR(75) null,city VARCHAR(75) null,state_ VARCHAR(75) null,zipCode VARCHAR(75) null,securityQuestion VARCHAR(75) null,answer VARCHAR(75) null,termOfUse BOOLEAN)";
+		"create table Amf_Member (memberId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,firstName VARCHAR(75) null,lastName VARCHAR(75) null,emailAddress VARCHAR(75) null,male BOOLEAN,monthOfBirth INTEGER,dayOfBirth INTEGER,yearOfBirth INTEGER,password_ VARCHAR(75) null,homePhone VARCHAR(75) null,mobilePhone VARCHAR(75) null,address1 VARCHAR(75) null,address2 VARCHAR(75) null,city VARCHAR(75) null,state_ VARCHAR(75) null,zipCode VARCHAR(75) null,securityQuestion VARCHAR(75) null,answer VARCHAR(75) null,termOfUse BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table Amf_Member";
 
@@ -184,7 +187,9 @@ public class MemberModelImpl
 		model.setLastName(soapModel.getLastName());
 		model.setEmailAddress(soapModel.getEmailAddress());
 		model.setMale(soapModel.isMale());
-		model.setBirthday(soapModel.getBirthday());
+		model.setMonthOfBirth(soapModel.getMonthOfBirth());
+		model.setDayOfBirth(soapModel.getDayOfBirth());
+		model.setYearOfBirth(soapModel.getYearOfBirth());
 		model.setPassword(soapModel.getPassword());
 		model.setHomePhone(soapModel.getHomePhone());
 		model.setMobilePhone(soapModel.getMobilePhone());
@@ -375,9 +380,16 @@ public class MemberModelImpl
 		attributeGetterFunctions.put("male", Member::getMale);
 		attributeSetterBiConsumers.put(
 			"male", (BiConsumer<Member, Boolean>)Member::setMale);
-		attributeGetterFunctions.put("birthday", Member::getBirthday);
+		attributeGetterFunctions.put("monthOfBirth", Member::getMonthOfBirth);
 		attributeSetterBiConsumers.put(
-			"birthday", (BiConsumer<Member, Date>)Member::setBirthday);
+			"monthOfBirth",
+			(BiConsumer<Member, Integer>)Member::setMonthOfBirth);
+		attributeGetterFunctions.put("dayOfBirth", Member::getDayOfBirth);
+		attributeSetterBiConsumers.put(
+			"dayOfBirth", (BiConsumer<Member, Integer>)Member::setDayOfBirth);
+		attributeGetterFunctions.put("yearOfBirth", Member::getYearOfBirth);
+		attributeSetterBiConsumers.put(
+			"yearOfBirth", (BiConsumer<Member, Integer>)Member::setYearOfBirth);
 		attributeGetterFunctions.put("password", Member::getPassword);
 		attributeSetterBiConsumers.put(
 			"password", (BiConsumer<Member, String>)Member::setPassword);
@@ -644,17 +656,47 @@ public class MemberModelImpl
 
 	@JSON
 	@Override
-	public Date getBirthday() {
-		return _birthday;
+	public int getMonthOfBirth() {
+		return _monthOfBirth;
 	}
 
 	@Override
-	public void setBirthday(Date birthday) {
+	public void setMonthOfBirth(int monthOfBirth) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_birthday = birthday;
+		_monthOfBirth = monthOfBirth;
+	}
+
+	@JSON
+	@Override
+	public int getDayOfBirth() {
+		return _dayOfBirth;
+	}
+
+	@Override
+	public void setDayOfBirth(int dayOfBirth) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_dayOfBirth = dayOfBirth;
+	}
+
+	@JSON
+	@Override
+	public int getYearOfBirth() {
+		return _yearOfBirth;
+	}
+
+	@Override
+	public void setYearOfBirth(int yearOfBirth) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_yearOfBirth = yearOfBirth;
 	}
 
 	@JSON
@@ -943,7 +985,9 @@ public class MemberModelImpl
 		memberImpl.setLastName(getLastName());
 		memberImpl.setEmailAddress(getEmailAddress());
 		memberImpl.setMale(isMale());
-		memberImpl.setBirthday(getBirthday());
+		memberImpl.setMonthOfBirth(getMonthOfBirth());
+		memberImpl.setDayOfBirth(getDayOfBirth());
+		memberImpl.setYearOfBirth(getYearOfBirth());
 		memberImpl.setPassword(getPassword());
 		memberImpl.setHomePhone(getHomePhone());
 		memberImpl.setMobilePhone(getMobilePhone());
@@ -1092,14 +1136,11 @@ public class MemberModelImpl
 
 		memberCacheModel.male = isMale();
 
-		Date birthday = getBirthday();
+		memberCacheModel.monthOfBirth = getMonthOfBirth();
 
-		if (birthday != null) {
-			memberCacheModel.birthday = birthday.getTime();
-		}
-		else {
-			memberCacheModel.birthday = Long.MIN_VALUE;
-		}
+		memberCacheModel.dayOfBirth = getDayOfBirth();
+
+		memberCacheModel.yearOfBirth = getYearOfBirth();
 
 		memberCacheModel.password = getPassword();
 
@@ -1266,7 +1307,9 @@ public class MemberModelImpl
 	private String _lastName;
 	private String _emailAddress;
 	private boolean _male;
-	private Date _birthday;
+	private int _monthOfBirth;
+	private int _dayOfBirth;
+	private int _yearOfBirth;
 	private String _password;
 	private String _homePhone;
 	private String _mobilePhone;
@@ -1319,7 +1362,9 @@ public class MemberModelImpl
 		_columnOriginalValues.put("lastName", _lastName);
 		_columnOriginalValues.put("emailAddress", _emailAddress);
 		_columnOriginalValues.put("male", _male);
-		_columnOriginalValues.put("birthday", _birthday);
+		_columnOriginalValues.put("monthOfBirth", _monthOfBirth);
+		_columnOriginalValues.put("dayOfBirth", _dayOfBirth);
+		_columnOriginalValues.put("yearOfBirth", _yearOfBirth);
 		_columnOriginalValues.put("password_", _password);
 		_columnOriginalValues.put("homePhone", _homePhone);
 		_columnOriginalValues.put("mobilePhone", _mobilePhone);
@@ -1377,29 +1422,33 @@ public class MemberModelImpl
 
 		columnBitmasks.put("male", 1024L);
 
-		columnBitmasks.put("birthday", 2048L);
+		columnBitmasks.put("monthOfBirth", 2048L);
 
-		columnBitmasks.put("password_", 4096L);
+		columnBitmasks.put("dayOfBirth", 4096L);
 
-		columnBitmasks.put("homePhone", 8192L);
+		columnBitmasks.put("yearOfBirth", 8192L);
 
-		columnBitmasks.put("mobilePhone", 16384L);
+		columnBitmasks.put("password_", 16384L);
 
-		columnBitmasks.put("address1", 32768L);
+		columnBitmasks.put("homePhone", 32768L);
 
-		columnBitmasks.put("address2", 65536L);
+		columnBitmasks.put("mobilePhone", 65536L);
 
-		columnBitmasks.put("city", 131072L);
+		columnBitmasks.put("address1", 131072L);
 
-		columnBitmasks.put("state_", 262144L);
+		columnBitmasks.put("address2", 262144L);
 
-		columnBitmasks.put("zipCode", 524288L);
+		columnBitmasks.put("city", 524288L);
 
-		columnBitmasks.put("securityQuestion", 1048576L);
+		columnBitmasks.put("state_", 1048576L);
 
-		columnBitmasks.put("answer", 2097152L);
+		columnBitmasks.put("zipCode", 2097152L);
 
-		columnBitmasks.put("termOfUse", 4194304L);
+		columnBitmasks.put("securityQuestion", 4194304L);
+
+		columnBitmasks.put("answer", 8388608L);
+
+		columnBitmasks.put("termOfUse", 16777216L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

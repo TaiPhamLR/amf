@@ -65,8 +65,9 @@ public class MemberServiceSoap {
 
 	public static com.liferay.training.amf.model.MemberSoap addMember(
 			long groupId, String firstName, String lastName,
-			String emailAddress, boolean male, java.util.Date birthday,
-			String password, String homePhone, String mobilePhone,
+			String emailAddress, String username, boolean male,
+			int monthOfBirth, int dayOfBirth, int yearOfBirth, String password,
+			String confirmPassword, String homePhone, String mobilePhone,
 			String address1, String address2, String city, String state,
 			String zipCode, String securityQuestion, String answer,
 			boolean termOfUse,
@@ -76,12 +77,69 @@ public class MemberServiceSoap {
 		try {
 			com.liferay.training.amf.model.Member returnValue =
 				MemberServiceUtil.addMember(
-					groupId, firstName, lastName, emailAddress, male, birthday,
-					password, homePhone, mobilePhone, address1, address2, city,
-					state, zipCode, securityQuestion, answer, termOfUse,
+					groupId, firstName, lastName, emailAddress, username, male,
+					monthOfBirth, dayOfBirth, yearOfBirth, password,
+					confirmPassword, homePhone, mobilePhone, address1, address2,
+					city, state, zipCode, securityQuestion, answer, termOfUse,
 					serviceContext);
 
 			return com.liferay.training.amf.model.MemberSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.training.amf.model.MemberSoap[]
+			getMembersByKeywords(
+				long scopeGroupId, String keywords, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.training.amf.model.Member> comparator)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.training.amf.model.Member> returnValue =
+				MemberServiceUtil.getMembersByKeywords(
+					scopeGroupId, keywords, start, end, comparator);
+
+			return com.liferay.training.amf.model.MemberSoap.toSoapModels(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static Object getmembersCountByKeywords(
+			long scopeGroupId, String keywords)
+		throws RemoteException {
+
+		try {
+			Object returnValue = MemberServiceUtil.getmembersCountByKeywords(
+				scopeGroupId, keywords);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.training.amf.model.MemberSoap[] getAllMembers()
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.training.amf.model.Member> returnValue =
+				MemberServiceUtil.getAllMembers();
+
+			return com.liferay.training.amf.model.MemberSoap.toSoapModels(
 				returnValue);
 		}
 		catch (Exception exception) {

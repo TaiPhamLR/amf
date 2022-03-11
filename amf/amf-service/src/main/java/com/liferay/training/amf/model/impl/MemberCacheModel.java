@@ -60,7 +60,7 @@ public class MemberCacheModel implements CacheModel<Member>, Externalizable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(47);
+		StringBundler sb = new StringBundler(51);
 
 		sb.append("{memberId=");
 		sb.append(memberId);
@@ -84,8 +84,12 @@ public class MemberCacheModel implements CacheModel<Member>, Externalizable {
 		sb.append(emailAddress);
 		sb.append(", male=");
 		sb.append(male);
-		sb.append(", birthday=");
-		sb.append(birthday);
+		sb.append(", monthOfBirth=");
+		sb.append(monthOfBirth);
+		sb.append(", dayOfBirth=");
+		sb.append(dayOfBirth);
+		sb.append(", yearOfBirth=");
+		sb.append(yearOfBirth);
 		sb.append(", password=");
 		sb.append(password);
 		sb.append(", homePhone=");
@@ -165,13 +169,9 @@ public class MemberCacheModel implements CacheModel<Member>, Externalizable {
 		}
 
 		memberImpl.setMale(male);
-
-		if (birthday == Long.MIN_VALUE) {
-			memberImpl.setBirthday(null);
-		}
-		else {
-			memberImpl.setBirthday(new Date(birthday));
-		}
+		memberImpl.setMonthOfBirth(monthOfBirth);
+		memberImpl.setDayOfBirth(dayOfBirth);
+		memberImpl.setYearOfBirth(yearOfBirth);
 
 		if (password == null) {
 			memberImpl.setPassword("");
@@ -267,7 +267,12 @@ public class MemberCacheModel implements CacheModel<Member>, Externalizable {
 		emailAddress = objectInput.readUTF();
 
 		male = objectInput.readBoolean();
-		birthday = objectInput.readLong();
+
+		monthOfBirth = objectInput.readInt();
+
+		dayOfBirth = objectInput.readInt();
+
+		yearOfBirth = objectInput.readInt();
 		password = objectInput.readUTF();
 		homePhone = objectInput.readUTF();
 		mobilePhone = objectInput.readUTF();
@@ -324,7 +329,12 @@ public class MemberCacheModel implements CacheModel<Member>, Externalizable {
 		}
 
 		objectOutput.writeBoolean(male);
-		objectOutput.writeLong(birthday);
+
+		objectOutput.writeInt(monthOfBirth);
+
+		objectOutput.writeInt(dayOfBirth);
+
+		objectOutput.writeInt(yearOfBirth);
 
 		if (password == null) {
 			objectOutput.writeUTF("");
@@ -410,7 +420,9 @@ public class MemberCacheModel implements CacheModel<Member>, Externalizable {
 	public String lastName;
 	public String emailAddress;
 	public boolean male;
-	public long birthday;
+	public int monthOfBirth;
+	public int dayOfBirth;
+	public int yearOfBirth;
 	public String password;
 	public String homePhone;
 	public String mobilePhone;

@@ -15,24 +15,44 @@ package com.liferay.training.amf.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.List;
+
 /**
  * @author Brian Wing Shun Chan
  */
-public class AssignmentValidationException extends PortalException {
+public class MemberValidationException extends PortalException {
 
-	public AssignmentValidationException() {
+	private static final long serialVersionUID = -1581035533678383616L;
+
+	public MemberValidationException() {
 	}
 
-	public AssignmentValidationException(String msg) {
+	public MemberValidationException(String msg) {
 		super(msg);
 	}
 
-	public AssignmentValidationException(String msg, Throwable throwable) {
+	public MemberValidationException(String msg, Throwable throwable) {
 		super(msg, throwable);
 	}
 
-	public AssignmentValidationException(Throwable throwable) {
+	public MemberValidationException(Throwable throwable) {
 		super(throwable);
 	}
+	
+	/**
+	 * Custom constructor taking a list as a parameter.
+	 *
+	 * @param errors
+	 */
+	public MemberValidationException(List<String> errors) {
+		super(String.join(",", errors));
+		_errors = errors;
+	}
+
+	public List<String> getErrors() {
+		return _errors;
+	}
+
+	private List<String> _errors;
 
 }

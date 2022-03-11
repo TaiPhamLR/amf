@@ -52,7 +52,9 @@ public class MemberWrapper
 		attributes.put("lastName", getLastName());
 		attributes.put("emailAddress", getEmailAddress());
 		attributes.put("male", isMale());
-		attributes.put("birthday", getBirthday());
+		attributes.put("monthOfBirth", getMonthOfBirth());
+		attributes.put("dayOfBirth", getDayOfBirth());
+		attributes.put("yearOfBirth", getYearOfBirth());
 		attributes.put("password", getPassword());
 		attributes.put("homePhone", getHomePhone());
 		attributes.put("mobilePhone", getMobilePhone());
@@ -136,10 +138,22 @@ public class MemberWrapper
 			setMale(male);
 		}
 
-		Date birthday = (Date)attributes.get("birthday");
+		Integer monthOfBirth = (Integer)attributes.get("monthOfBirth");
 
-		if (birthday != null) {
-			setBirthday(birthday);
+		if (monthOfBirth != null) {
+			setMonthOfBirth(monthOfBirth);
+		}
+
+		Integer dayOfBirth = (Integer)attributes.get("dayOfBirth");
+
+		if (dayOfBirth != null) {
+			setDayOfBirth(dayOfBirth);
+		}
+
+		Integer yearOfBirth = (Integer)attributes.get("yearOfBirth");
+
+		if (yearOfBirth != null) {
+			setYearOfBirth(yearOfBirth);
 		}
 
 		String password = (String)attributes.get("password");
@@ -240,16 +254,6 @@ public class MemberWrapper
 	}
 
 	/**
-	 * Returns the birthday of this member.
-	 *
-	 * @return the birthday of this member
-	 */
-	@Override
-	public Date getBirthday() {
-		return model.getBirthday();
-	}
-
-	/**
 	 * Returns the city of this member.
 	 *
 	 * @return the city of this member
@@ -277,6 +281,16 @@ public class MemberWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the day of birth of this member.
+	 *
+	 * @return the day of birth of this member
+	 */
+	@Override
+	public int getDayOfBirth() {
+		return model.getDayOfBirth();
 	}
 
 	/**
@@ -370,6 +384,16 @@ public class MemberWrapper
 	}
 
 	/**
+	 * Returns the month of birth of this member.
+	 *
+	 * @return the month of birth of this member
+	 */
+	@Override
+	public int getMonthOfBirth() {
+		return model.getMonthOfBirth();
+	}
+
+	/**
 	 * Returns the password of this member.
 	 *
 	 * @return the password of this member
@@ -450,6 +474,16 @@ public class MemberWrapper
 	}
 
 	/**
+	 * Returns the year of birth of this member.
+	 *
+	 * @return the year of birth of this member
+	 */
+	@Override
+	public int getYearOfBirth() {
+		return model.getYearOfBirth();
+	}
+
+	/**
 	 * Returns the zip code of this member.
 	 *
 	 * @return the zip code of this member
@@ -515,16 +549,6 @@ public class MemberWrapper
 	}
 
 	/**
-	 * Sets the birthday of this member.
-	 *
-	 * @param birthday the birthday of this member
-	 */
-	@Override
-	public void setBirthday(Date birthday) {
-		model.setBirthday(birthday);
-	}
-
-	/**
 	 * Sets the city of this member.
 	 *
 	 * @param city the city of this member
@@ -552,6 +576,16 @@ public class MemberWrapper
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
+	}
+
+	/**
+	 * Sets the day of birth of this member.
+	 *
+	 * @param dayOfBirth the day of birth of this member
+	 */
+	@Override
+	public void setDayOfBirth(int dayOfBirth) {
+		model.setDayOfBirth(dayOfBirth);
 	}
 
 	/**
@@ -645,6 +679,16 @@ public class MemberWrapper
 	}
 
 	/**
+	 * Sets the month of birth of this member.
+	 *
+	 * @param monthOfBirth the month of birth of this member
+	 */
+	@Override
+	public void setMonthOfBirth(int monthOfBirth) {
+		model.setMonthOfBirth(monthOfBirth);
+	}
+
+	/**
 	 * Sets the password of this member.
 	 *
 	 * @param password the password of this member
@@ -722,6 +766,16 @@ public class MemberWrapper
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
+	}
+
+	/**
+	 * Sets the year of birth of this member.
+	 *
+	 * @param yearOfBirth the year of birth of this member
+	 */
+	@Override
+	public void setYearOfBirth(int yearOfBirth) {
+		model.setYearOfBirth(yearOfBirth);
 	}
 
 	/**

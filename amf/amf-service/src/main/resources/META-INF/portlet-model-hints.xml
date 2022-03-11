@@ -13,7 +13,9 @@
 		<field name="lastName" type="String" />
 		<field name="emailAddress" type="String" />
 		<field name="male" type="boolean" />
-		<field name="birthday" type="Date" />
+		<field name="monthOfBirth" type="int" />
+		<field name="dayOfBirth" type="int" />
+		<field name="yearOfBirth" type="int" />
 		<field name="password" type="String" />
 		<field name="homePhone" type="String" />
 		<field name="mobilePhone" type="String" />

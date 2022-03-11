@@ -252,18 +252,46 @@ public interface MemberModel
 	public void setMale(boolean male);
 
 	/**
-	 * Returns the birthday of this member.
+	 * Returns the month of birth of this member.
 	 *
-	 * @return the birthday of this member
+	 * @return the month of birth of this member
 	 */
-	public Date getBirthday();
+	public int getMonthOfBirth();
 
 	/**
-	 * Sets the birthday of this member.
+	 * Sets the month of birth of this member.
 	 *
-	 * @param birthday the birthday of this member
+	 * @param monthOfBirth the month of birth of this member
 	 */
-	public void setBirthday(Date birthday);
+	public void setMonthOfBirth(int monthOfBirth);
+
+	/**
+	 * Returns the day of birth of this member.
+	 *
+	 * @return the day of birth of this member
+	 */
+	public int getDayOfBirth();
+
+	/**
+	 * Sets the day of birth of this member.
+	 *
+	 * @param dayOfBirth the day of birth of this member
+	 */
+	public void setDayOfBirth(int dayOfBirth);
+
+	/**
+	 * Returns the year of birth of this member.
+	 *
+	 * @return the year of birth of this member
+	 */
+	public int getYearOfBirth();
+
+	/**
+	 * Sets the year of birth of this member.
+	 *
+	 * @param yearOfBirth the year of birth of this member
+	 */
+	public void setYearOfBirth(int yearOfBirth);
 
 	/**
 	 * Returns the password of this member.
