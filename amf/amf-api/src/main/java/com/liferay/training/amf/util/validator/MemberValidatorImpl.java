@@ -200,7 +200,7 @@ public class MemberValidatorImpl implements MemberValidator {
 		if (password.length() < 6) {
 			result = false;
 			errors.add("passwordInvalid");
-			return false;
+			return result;
 		}
 
 		boolean hasNumber = false;

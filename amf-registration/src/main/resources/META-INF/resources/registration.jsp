@@ -18,6 +18,7 @@
 <liferay-ui:error key="stateInvalid" message="error.state-invalid" />
 <liferay-ui:error key="birthdayInvalid" message="error.birthday-invalid" />
 <liferay-ui:error key="confirmPasswordNotMatch" message="error.confirm-password-not-match" />
+<liferay-ui:error key="passwordInvalid" message="error.password-invalid" />
 <liferay-ui:error key="birthdayInvalidAgeLessThan13" message="error.assignment-description-empty" />
 
 
@@ -162,8 +163,8 @@
 			selectData: Liferay.Address.getCountries,
 			selectDesc: 'nameCurrentValue',
 			selectSort: true,
-			selectId: 'countryCode',
-			selectVal: 'united-states'
+			selectId: 'countryId',
+			selectVal: '19'
 		},
 		{
 			select: '<portlet:namespace />state',
