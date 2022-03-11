@@ -64,10 +64,10 @@ public class MemberValidatorImpl implements MemberValidator {
 		}
 
 		// validate birthday
-		validateBirthday(monthOfBirth, dayOfBirth, yearOfBirth, result, errors);
+		result &= validateBirthday(monthOfBirth, dayOfBirth, yearOfBirth, errors);
 
 		// validate password and confirmPassword
-		validatePassword(password, confirmPassword, result, errors);
+		result &= validatePassword(password, confirmPassword, errors);
 		
 		// validate homePhone
         if (!Validator.isDigit(homePhone) || (homePhone.length() != 10)) {
@@ -82,7 +82,7 @@ public class MemberValidatorImpl implements MemberValidator {
         }
 
         // validate address
-        validateAddress(address1, address2, city, state, zip, result,  errors);
+        result &= validateAddress(address1, address2, city, state, zip, errors);
         
         if (! Arrays.asList(AmfRegistrationConstants.SECURITY_QUESTIONS).contains(securityQuestion)) {
         	result = false;
@@ -116,8 +116,8 @@ public class MemberValidatorImpl implements MemberValidator {
 	 * @param result
 	 * @param errors
 	 */
-	protected void validateAddress(String address1, String address2, String city, String state, String zip, 
-			boolean result, List<String> errors) {
+	protected boolean validateAddress(String address1, String address2, String city, String state, String zip, List<String> errors) {
+		boolean result = true;
 		if (Validator.isNull(address1) || (address1.length() > 255)) {
 			result = false;
 			errors.add("address1Invalid");
@@ -126,11 +126,12 @@ public class MemberValidatorImpl implements MemberValidator {
 			result = false;
 			errors.add("address2Invalid");
 		}
-		validateState(state, result, errors);
+		result &= validateState(state, errors);
 		if (!Validator.isDigit(zip) || (zip.length() != 5)) {
 			result = false;
 			errors.add("zipInvalid");
 		}
+		return result;
 	}
 	
 	/**
@@ -139,7 +140,7 @@ public class MemberValidatorImpl implements MemberValidator {
 	 * @param result
 	 * @param errors
 	 */
-	protected void validateState(String state, boolean result, List<String> errors) {
+	protected boolean validateState(String state, List<String> errors) {
 		try {
 			// Assumptions: Registration is open to US users only.
 			Country country = countryService.getCountryByName("united-states");
@@ -149,9 +150,10 @@ public class MemberValidatorImpl implements MemberValidator {
 			}
 		} catch (PortalException e) {
 			e.printStackTrace();
-			result = false;
 			errors.add("stateInvalid");
+			return false;
 		}
+		return true;
 	}
 
 	/**
@@ -162,10 +164,10 @@ public class MemberValidatorImpl implements MemberValidator {
 	 * @param result
 	 * @param errors
 	 */
-	protected void validateBirthday(int monthOfBirth, int dayOfBirth, int yearOfBirth, boolean result, List<String> errors) {
+	protected boolean validateBirthday(int monthOfBirth, int dayOfBirth, int yearOfBirth, List<String> errors) {
 		if (!CalendarUtil.isDate(monthOfBirth - 1, dayOfBirth, yearOfBirth)) {
-			result = false;
 			errors.add("birthdayInvalid");
+			return false;
 		} else {
 			Calendar cal = CalendarFactoryUtil.getCalendar();
 			cal.set(yearOfBirth, monthOfBirth - 1, dayOfBirth, 0, 0, 0);
@@ -174,9 +176,10 @@ public class MemberValidatorImpl implements MemberValidator {
 			int age = CalendarUtil.getAge(birthday, CalendarFactoryUtil.getCalendar());
 
 			if (age < 13) {
-				result = false;
 				errors.add("birthdayInvalidAgeLessThan13");
+				return false;
 			}
+			return true;
 		}
 	}
 	
@@ -187,7 +190,8 @@ public class MemberValidatorImpl implements MemberValidator {
 	 * @param result
 	 * @param errors
 	 */
-	protected void validatePassword(String password, String confirmPassword, boolean result, List<String> errors) {
+	protected boolean validatePassword(String password, String confirmPassword, List<String> errors) {
+		boolean result = true;
 		if (!password.equals(confirmPassword)) {
 			result = false;
 			errors.add("confirmPasswordNotMatch");
@@ -196,7 +200,7 @@ public class MemberValidatorImpl implements MemberValidator {
 		if (password.length() < 6) {
 			result = false;
 			errors.add("passwordInvalid");
-			return;
+			return false;
 		}
 
 		boolean hasNumber = false;
@@ -226,6 +230,7 @@ public class MemberValidatorImpl implements MemberValidator {
         	result = false;
 			errors.add("passwordInvalid");
         }
+        return result;
 	}
 
 	@Reference(service = CountryService.class)
